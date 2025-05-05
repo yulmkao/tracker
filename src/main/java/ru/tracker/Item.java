@@ -16,11 +16,6 @@ public class Item {
         this.name = name;
     }
 
-    public void printInfo() {
-        System.out.println("ID: " + id);
-        System.out.println("Name: " + name);
-    }
-
     public int getId() {
         return id;
     }
@@ -35,14 +30,5 @@ public class Item {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public static void main(String[] args) {
-        Item item1 = new Item();
-        Item item2 = new Item("Goods");
-        Item item3 = new Item(3, "Cola");
-        item1.printInfo();
-        item2.printInfo();
-        item3.printInfo();
     }
 }
