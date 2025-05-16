@@ -15,15 +15,13 @@ public class Matches {
             if (1 <= matches && matches <= 3 && count >= matches) {
                 count -= matches;
                 System.out.println("Спичек осталось: " + count);
-                if (count == 0) {
-                    System.out.println(player + " победил");
-                } else {
-                    System.out.println("Передаем ход другому игроку");
-                    turn = !turn;
-                }
+                System.out.println("Передаем ход другому игроку");
+                turn = !turn;
             } else {
                 System.out.println("Ошибка. Введите число повторно");
             }
         }
+        String winner = turn ? "Первый игрок" : "Второй игрок";
+        System.out.println(winner + " победил!");
     }
 }
