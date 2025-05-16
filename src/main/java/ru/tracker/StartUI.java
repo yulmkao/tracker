@@ -27,6 +27,18 @@ public class StartUI {
                         System.out.println(item);
                     }
                 }
+            } else if (select == 2) {
+                System.out.println("=== Редактирование заявки ===");
+                System.out.print("Введите ID заявки для редактирования: ");
+                int id = Integer.parseInt(scanner.nextLine());
+                System.out.println("Введите новое имя: ");
+                String newName = scanner.nextLine();
+                Item newItem = new Item(newName);
+                if (tracker.replace(id, newItem)) {
+                    System.out.println("Заявка успешно изменена.");
+                } else {
+                    System.out.println("Ошибка. Заявки с ID " + id + " не существует.");
+                }
             } else if (select == 6) {
                 run = false;
             }
