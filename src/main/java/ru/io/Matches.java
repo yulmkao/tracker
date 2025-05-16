@@ -14,8 +14,9 @@ public class Matches {
             int matches = Integer.parseInt(input.nextLine());
             if (1 <= matches && matches <= 3 && count >= matches) {
                 count -= matches;
+                System.out.println("Спичек осталось: " + count);
                 if (count == 0) {
-                    System.out.println("Игрок победил");
+                    System.out.println(player + " победил");
                 } else {
                     System.out.println("Передаем ход другому игроку");
                     turn = !turn;
