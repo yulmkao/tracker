@@ -49,6 +49,16 @@ public class StartUI {
                 } else {
                     System.out.println("Ошибка. Заявки с ID " + id + " не существует.");
                 }
+            } else if (select == 4) {
+                System.out.println("=== Поиск заявки по ID ===");
+                System.out.println("Введите ID: ");
+                int id = Integer.parseInt(scanner.nextLine());
+                Item item = tracker.findById(id);
+                if (item != null) {
+                    System.out.println("Заявка успешно найдена: " + item);
+                } else {
+                    System.out.println("Ошибка. Заявки с ID " + id + " не существует.");
+                }
             } else if (select == 6) {
                 run = false;
             }
