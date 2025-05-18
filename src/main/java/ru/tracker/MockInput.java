@@ -13,7 +13,7 @@ public class MockInput implements Input {
     }
 
     @Override
-    public int askInt(String queston) {
-        return Integer.parseInt(askStr(queston));
+    public int askInt(String question) {
+        return Integer.parseInt(askStr(question));
     }
 }
