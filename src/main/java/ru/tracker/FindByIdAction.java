@@ -1,6 +1,12 @@
 package ru.tracker;
 
 public class FindByIdAction implements UserAction {
+    private final Output output;
+
+    public FindByIdAction(Output output) {
+        this.output = output;
+    }
+
     @Override
     public String name() {
         return "Показать заявку по id";
@@ -8,13 +14,13 @@ public class FindByIdAction implements UserAction {
 
     @Override
     public boolean execute(Input input, Tracker tracker) {
-        System.out.println("=== Поиск заявки по ID ===");
+        output.println("=== Поиск заявки по ID ===");
         int id = input.askInt("Введите ID: ");
         Item item = tracker.findById(id);
         if (item != null) {
-            System.out.println("Заявка успешно найдена: " + item);
+            output.println("Заявка успешно найдена: " + item);
         } else {
-            System.out.println("Ошибка. Заявки с ID " + id + " не существует.");
+            output.println("Ошибка. Заявки с ID " + id + " не существует.");
         }
         return true;
     }

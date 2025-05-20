@@ -1,6 +1,12 @@
 package ru.tracker;
 
 public class FindByNameAction implements UserAction {
+    private final Output output;
+
+    public FindByNameAction(Output output) {
+        this.output = output;
+    }
+
     @Override
     public String name() {
         return "Показать заявки по имени";
@@ -8,15 +14,15 @@ public class FindByNameAction implements UserAction {
 
     @Override
     public boolean execute(Input input, Tracker tracker) {
-        System.out.println("=== Поиск заявки по имени ===");
+        output.println("=== Поиск заявки по имени ===");
         String name = input.askStr("Введите имя: ");
         Item[] item = tracker.findByName(name);
         if (item.length > 0) {
             for (Item items : item) {
-                System.out.println(items);
+                output.println(items);
             }
         } else {
-            System.out.println("Ошибка. Заявок с именем " + name + " не существует.");
+            output.println("Ошибка. Заявок с именем " + name + " не существует.");
         }
         return true;
     }
