@@ -16,18 +16,20 @@ class StartUITest {
 
     @Test
     void whenReplaceItem() {
-        Input input = new MockInput(new String[]{"0", "Old item name", "1", "1", "New item name", "2"});
         Tracker tracker = new Tracker();
-        UserAction[] actions = {new CreateAction(), new ReplaceAction(), new ExitAction()};
+        Item item = tracker.add(new Item("Old item name"));
+        Input input = new MockInput(new String[]{"0", "1", "New item name", "1"});
+        UserAction[] actions = {new ReplaceAction(), new ExitAction()};
         new StartUI().init(input, tracker, actions);
         assertThat(tracker.findAll()[0].getName()).isEqualTo("New item name");
     }
 
     @Test
     void whenDeleteItem() {
-        Input input = new MockInput(new String[]{"0", "Item name", "1", "1", "2"});
+        Input input = new MockInput(new String[]{"0", "1", "1"});
         Tracker tracker = new Tracker();
-        UserAction[] actions = {new CreateAction(), new DeleteAction(), new ExitAction()};
+        Item item = tracker.add(new Item("Item name"));
+        UserAction[] actions = {new DeleteAction(), new ExitAction()};
         new StartUI().init(input, tracker, actions);
         assertThat(tracker.findById(1)).isNull();
     }
