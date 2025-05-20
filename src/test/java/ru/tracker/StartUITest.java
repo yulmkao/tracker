@@ -38,4 +38,193 @@ class StartUITest {
         new StartUI(output).init(input, tracker, actions);
         assertThat(tracker.findAll()).hasSize(1);
     }
+
+    @Test
+    void whenReplaceItemTestOutputIsSuccessfully() {
+        Output output = new MockOutput();
+        Tracker tracker = new Tracker();
+        Item one = tracker.add(new Item("test1"));
+        Item two = tracker.add(new Item("test2"));
+        String replaceName = "New Test Name";
+        Input input = new MockInput(new String[] {"0", String.valueOf(one.getId()), replaceName, "1"});
+        UserAction[] actions = new UserAction[]{new ReplaceAction(output), new ExitAction(output)};
+        new StartUI(output).init(input, tracker, actions);
+        String ln = System.lineSeparator();
+        assertThat(output.toString()).isEqualTo(
+                "Меню: " + ln
+                        + "0. Изменить заявку" + ln
+                        + "1. Завершить программу" + ln
+                        + "=== Редактирование заявки ===" + ln
+                        + "Заявка успешно изменена." + ln
+                        + "Меню: " + ln
+                        + "0. Изменить заявку" + ln
+                        + "1. Завершить программу" + ln
+                        + "=== Завершение программы ===" + ln
+        );
+    }
+
+    @Test
+    void whenReplaceItemTestOutputIsNotSuccessfully() {
+        Output output = new MockOutput();
+        Tracker tracker = new Tracker();
+        Item one = tracker.add(new Item("test1"));
+        Item two = tracker.add(new Item("test2"));
+        String replaceName = "New Test Name";
+        String id = "999";
+        Input input = new MockInput(new String[] {"0", id, replaceName, "1"});
+        UserAction[] actions = new UserAction[]{new ReplaceAction(output), new ExitAction(output)};
+        new StartUI(output).init(input, tracker, actions);
+        String ln = System.lineSeparator();
+        assertThat(output.toString()).isEqualTo(
+                "Меню: " + ln
+                        + "0. Изменить заявку" + ln
+                        + "1. Завершить программу" + ln
+                        + "=== Редактирование заявки ===" + ln
+                        + "Ошибка. Заявки с ID " + id + " не существует." + ln
+                        + "Меню: " + ln
+                        + "0. Изменить заявку" + ln
+                        + "1. Завершить программу" + ln
+                        + "=== Завершение программы ===" + ln
+        );
+    }
+
+    @Test
+    void whenFindByAllActionTestOutputSuccessfully() {
+        Output output = new MockOutput();
+        Tracker tracker = new Tracker();
+        Item one = tracker.add(new Item("test1"));
+        Item two = tracker.add(new Item("test2"));
+        Input input = new MockInput(new String[]{"0", "1"});
+        UserAction[] actions = new UserAction[]{new FindAllAction(output), new ExitAction(output)};
+        new StartUI(output).init(input, tracker, actions);
+        String ln = System.lineSeparator();
+        assertThat(output.toString()).isEqualTo(
+                "Меню: " + ln
+                        + "0. Показать все заявки" + ln
+                        + "1. Завершить программу" + ln
+                        + "=== Вывод всех заявок ===" + ln
+                        + one + ln
+                        + two + ln
+                        + "Меню: " + ln
+                        + "0. Показать все заявки" + ln
+                        + "1. Завершить программу" + ln
+                        + "=== Завершение программы ===" + ln
+        );
+    }
+
+    @Test
+    void whenFindByAllActionTestOutputNotSuccessfully() {
+        Output output = new MockOutput();
+        Tracker tracker = new Tracker();
+        Input input = new MockInput(new String[]{"0", "1"});
+        UserAction[] actions = new UserAction[]{new FindAllAction(output), new ExitAction(output)};
+        new StartUI(output).init(input, tracker, actions);
+        String ln = System.lineSeparator();
+        assertThat(output.toString()).isEqualTo(
+                "Меню: " + ln
+                        + "0. Показать все заявки" + ln
+                        + "1. Завершить программу" + ln
+                        + "=== Вывод всех заявок ===" + ln
+                        + "Хранилище еще не содержит заявок" + ln
+                        + "Меню: " + ln
+                        + "0. Показать все заявки" + ln
+                        + "1. Завершить программу" + ln
+                        + "=== Завершение программы ===" + ln
+        );
+    }
+
+    @Test
+    void whenFindByNameActionTestOutputSuccessfully() {
+        Output output = new MockOutput();
+        Tracker tracker = new Tracker();
+        Item one = tracker.add(new Item("test1"));
+        Item two = tracker.add(new Item("test2"));
+        String name = "test1";
+        Input input = new MockInput(new String[]{"0", name, "1"});
+        UserAction[] actions = new UserAction[]{new FindByNameAction(output), new ExitAction(output)};
+        new StartUI(output).init(input, tracker, actions);
+        String ln = System.lineSeparator();
+        assertThat(output.toString()).isEqualTo(
+                "Меню: " + ln
+                        + "0. Показать заявки по имени" + ln
+                        + "1. Завершить программу" + ln
+                        + "=== Поиск заявки по имени ===" + ln
+                        + one + ln
+                        + "Меню: " + ln
+                        + "0. Показать заявки по имени" + ln
+                        + "1. Завершить программу" + ln
+                        + "=== Завершение программы ===" + ln
+        );
+    }
+
+    @Test
+    void whenFindByNameActionTestOutputNotSuccessfully() {
+        Output output = new MockOutput();
+        Tracker tracker = new Tracker();
+        Item one = tracker.add(new Item("test1"));
+        Item two = tracker.add(new Item("test2"));
+        String name = "test3";
+        Input input = new MockInput(new String[]{"0", name, "1"});
+        UserAction[] actions = new UserAction[]{new FindByNameAction(output), new ExitAction(output)};
+        new StartUI(output).init(input, tracker, actions);
+        String ln = System.lineSeparator();
+        assertThat(output.toString()).isEqualTo(
+                "Меню: " + ln
+                        + "0. Показать заявки по имени" + ln
+                        + "1. Завершить программу" + ln
+                        + "=== Поиск заявки по имени ===" + ln
+                        + "Ошибка. Заявок с именем " + name + " не существует." + ln
+                        + "Меню: " + ln
+                        + "0. Показать заявки по имени" + ln
+                        + "1. Завершить программу" + ln
+                        + "=== Завершение программы ===" + ln
+        );
+    }
+
+    @Test
+    void whenFindByIdActionTestOutputSuccessfully() {
+        Output output = new MockOutput();
+        Tracker tracker = new Tracker();
+        Item one = tracker.add(new Item("test1"));
+        Item two = tracker.add(new Item("test2"));
+        Input input = new MockInput(new String[]{"0", String.valueOf(one.getId()), "1"});
+        UserAction[] actions = new UserAction[]{new FindByIdAction(output), new ExitAction(output)};
+        new StartUI(output).init(input, tracker, actions);
+        String ln = System.lineSeparator();
+        assertThat(output.toString()).isEqualTo(
+                "Меню: " + ln
+                        + "0. Показать заявку по id" + ln
+                        + "1. Завершить программу" + ln
+                        + "=== Поиск заявки по ID ===" + ln
+                        + "Заявка успешно найдена: " + one + ln
+                        + "Меню: " + ln
+                        + "0. Показать заявку по id" + ln
+                        + "1. Завершить программу" + ln
+                        + "=== Завершение программы ===" + ln
+        );
+    }
+
+    @Test
+    void whenFindByIdActionTestOutputNotSuccessfully() {
+        Output output = new MockOutput();
+        Tracker tracker = new Tracker();
+        Item one = tracker.add(new Item("test1"));
+        Item two = tracker.add(new Item("test2"));
+        String id = "999";
+        Input input = new MockInput(new String[]{"0", id, "1"});
+        UserAction[] actions = new UserAction[]{new FindByIdAction(output), new ExitAction(output)};
+        new StartUI(output).init(input, tracker, actions);
+        String ln = System.lineSeparator();
+        assertThat(output.toString()).isEqualTo(
+                "Меню: " + ln
+                        + "0. Показать заявку по id" + ln
+                        + "1. Завершить программу" + ln
+                        + "=== Поиск заявки по ID ===" + ln
+                        + "Ошибка. Заявки с ID " + id + " не существует." + ln
+                        + "Меню: " + ln
+                        + "0. Показать заявку по id" + ln
+                        + "1. Завершить программу" + ln
+                        + "=== Завершение программы ===" + ln
+        );
+    }
 }
