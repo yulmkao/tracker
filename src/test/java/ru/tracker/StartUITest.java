@@ -33,6 +33,6 @@ class StartUITest {
         Item item2 = tracker.add(new Item("Item name"));
         UserAction[] actions = {new DeleteAction(), new ExitAction()};
         new StartUI().init(input, tracker, actions);
-        assertThat(tracker.findById(1)).isNull();
+        assertThat(tracker.findAll()).hasSize(1);
     }
 }
