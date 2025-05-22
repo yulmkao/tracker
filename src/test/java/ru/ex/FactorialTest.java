@@ -11,7 +11,7 @@ public class FactorialTest {
         IllegalArgumentException exception = assertThrows(
                 IllegalArgumentException.class,
                 () -> {
-                    Factorial.calc(-1);
+                    new Factorial().calc(-1);
                 });
         assertThat(exception.getMessage()).isEqualTo("Number should not be less than zero");
     }

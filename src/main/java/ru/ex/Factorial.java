@@ -1,7 +1,7 @@
 package ru.ex;
 
 public class Factorial {
-    public static int calc(int number) {
+    public int calc(int number) {
         if (number < 0) {
             throw new IllegalArgumentException("Number should not be less than zero");
         }
